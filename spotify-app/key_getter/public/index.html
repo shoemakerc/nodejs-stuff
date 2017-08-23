@@ -19,7 +19,7 @@
   <body>
     <div class="container">
       <div id="login">
-        <h1>Welcome to key getter! Please log in to get started.</h1>
+        <h1>Welcome to Key Getter! Please log in to get started.</h1>
         <a href="/login" class="btn btn-primary">Log in with Spotify</a>
       </div>
       <div id="loggedin">
@@ -27,15 +27,15 @@
         <div id="user-profile">
         </div>
 
-        <div id="audio-features">
-        </div>
-
-        <h1>Search for an Artist</h1>
-        <p>Type an artist name and click on "Search". Then, click on any album from the results to play 30 seconds of its first track.</p>
+        <h1>Search</h1>
+        <p>Type a name of a song and click on "Search".</p>
         <form id="search-form">
-          <input type="text" id="query" value="" class="form-control" placeholder="Type an Artist Name"/>
+          <input type="text" id="query" value="" class="form-control" placeholder="Type a Song Name"/>
           <input type="submit" id="search" class="btn btn-primary" value="Search" />
         </form>
+
+        <div id="audio-features">
+        </div>
 
         <div id="results">
         </div>
@@ -73,11 +73,12 @@
       </dl>
     </script>
 
-    <script id="results-template" type="text/x-handlebars-template">
+    <!--<script id="results-template" type="text/x-handlebars-template">
+      
       {{#each albums.items}}
       <div style="background-image:url({{images.0.url}})" data-album-id="{{id}}" class="cover"></div>
       {{/each}} 
-    </script>
+    </script>-->
 
     <script id="oauth-template" type="text/x-handlebars-template">
       <h2>oAuth info</h2>
@@ -91,6 +92,10 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
     <script>
+      /**
+       * Helper register: map given pitch class to corresponding tone
+       * @return the corresponding tone
+       */
       Handlebars.registerHelper("key-convert", function(key) {
         var keys = ['C', 'C sharp', 'D', 'D sharp/E flat', 'E', 'F', 'F sharp/G flat', 'G', 'G sharp/A flat', 'A', 'A sharp/B flat', 'B'];
         return keys[key];
@@ -122,9 +127,9 @@
             audioFeaturesTemplate = Handlebars.compile(audioFeaturesSource),
             audioFeaturesPlaceholder = document.getElementById('audio-features');
 
-        var templateSource = document.getElementById('results-template').innerHTML,
+        /*var templateSource = document.getElementById('results-template').innerHTML,
             template = Handlebars.compile(templateSource),
-            resultsPlaceholder = document.getElementById('results');
+            resultsPlaceholder = document.getElementById('results');*/
 
         var oauthSource = document.getElementById('oauth-template').innerHTML,
             oauthTemplate = Handlebars.compile(oauthSource),
@@ -155,8 +160,8 @@
                 success: function(response) {
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
 
-                  $('#login').hide();
-                  $('#loggedin').show();
+                  $('#login').hide(); // after getting the profile credentials,
+                  $('#loggedin').show(); // switch to render 'logged in' screen
                 }
             });
 
@@ -169,25 +174,30 @@
                   audioFeaturesPlaceholder.innerHTML = audioFeaturesTemplate(response);
                 }
             });
-
+/*
             var searchTracks = function (query) {
               $.ajax({
                   url: 'https://api.spotify.com/v1/search',
                   data: {
                       q: query,
                       type: 'track'
+                      limit: 1
                   },
                   success: function (response) {
                       resultsPlaceholder.innerHTML = template(response);
                   }
               });
             };
-
+*/
           } else {
               // render initial screen
               $('#login').show();
               $('#loggedin').hide();
           }
+
+          document.getElementById('search-form').addEventListener('submit', function(e) {
+            
+          }, false);
 
           document.getElementById('obtain-new-token').addEventListener('click', function() {
             $.ajax({
