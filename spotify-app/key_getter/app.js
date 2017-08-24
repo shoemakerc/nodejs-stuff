@@ -1,6 +1,6 @@
 /**
- * Basic node.js script for the Authorization Code oAuth2 
- * flow to authenticate against the Spotify Accounts.
+ * Node script to connect to the Spotify API
+ * Uses the Authorization Code oAuth2 flow
  *
  */
 
@@ -9,8 +9,8 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = ''; // ENTER CLIENT ID HERE
-var client_secret = ''; // ENTER CLIENT SECRET KEY HERE
+var client_id = 'a79663a2973a4ff9b1bc9e7966c21685'; // ENTER CLIENT ID HERE
+var client_secret = 'd326e95d70e747b8930b37e09983c210'; // ENTER CLIENT SECRET KEY HERE
 var redirect_uri = 'http://localhost:8888/callback'; 
 
 /**
