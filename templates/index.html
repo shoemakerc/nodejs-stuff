@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
   <head>
-    <title>Key Getter by Chris Shoemaker</title>
+    <title>Spotify Dance Judge</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
@@ -12,29 +13,36 @@
   <body>
     <div class="container">
       <div id="login">
-        <h1>Welcome to Key Getter! Please log in to get started.</h1>
-        <a href="/login" class="btn btn-primary">Log in with Spotify</a>
+        <h1>Welcome to the Spotify Dance Judge! Click the button below to get started.</h1>
+        <a href="/login" class="btn btn-primary">Enter</a>
       </div>
       <div id="loggedin">
-
-        <div id="user-profile">
+        <h1 id="header" style="text-align:center">Spotify Dance Judge</h1>
+        <br><br>
+        <div id="search">
+          <h3>Search</h3>
+          <p>Type a name of a song and artist name, then press Enter or click on "Search".</p>
+          <form id="search-form">
+            <input type="text" id="query" value="" class="form-control" placeholder="Type a Song Name and Artist"/>
+            <br>
+            <input type="submit" id="search" class="btn btn-primary" value="Search" />
+          </form>
         </div>
 
-        <h1>Search</h1>
-        <p>Type a name of a song and click on "Search".</p>
-        <form id="search-form">
-          <input type="text" id="query" value="" class="form-control" placeholder="Type a Song Name"/>
-          <br>
-          <input type="submit" id="search" class="btn btn-primary" value="Search" />
-        </form>
-
         <div id="results">
+
         </div>
 
         <div id="audio-features">
+
+        </div>
+
+        <div id="user-profile">
+
         </div>
 
         <div id="oauth">
+
         </div>
 
         <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
@@ -43,14 +51,13 @@
     </div>
 
     <script id="user-profile-template" type="text/x-handlebars-template">
-      <h1>Logged in as {{display_name}}</h1>
+      <h3>Logged in as {{display_name}}</h3>
       <div class="media">
         <div class="pull-left">
-          <img class="media-object" width="150" src="{{images.0.url}}" />
+          <img class="media-object" width="75" src="{{images.0.url}}" />
         </div>
         <div class="media-body">
           <dl class="dl-horizontal">
-            <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
             <dt>Id</dt><dd>{{id}}</dd>
             <dt>Country</dt><dd>{{country}}</dd>
           </dl>
@@ -59,7 +66,7 @@
     </script>
 
     <script id="audio-features-template" type="text/x-handlebars-template">
-      <h2>Features</h2>
+      <h3>Features</h3>
       <dl class="dl-horizontal">
         <dt>Can I dance to this?</dt><dd>{{dance? danceability}}</dd>
         <dt>Key</dt><dd>{{key-convert key}}</dd>
@@ -68,13 +75,13 @@
     </script>
 
     <script id="results-template" type="text/x-handlebars-template">
-      <h2>Results</h2>
+      <h3>Results</h3>
       <img width="150" height="150" src="{{tracks.items.0.album.images.0.url}}" />
       <h4>You're (hopefully) searching for "{{tracks.items.0.name}}" by {{tracks.items.0.artists.0.name}}.</h4>
     </script>
 
     <script id="oauth-template" type="text/x-handlebars-template">
-      <h2>oAuth info</h2>
+      <h3>oAuth info</h3>
       <dl class="dl-horizontal">
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
         <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}></dd>
@@ -149,17 +156,7 @@
                   $('#loggedin').show(); // switch to render 'logged in' screen
                 }
             });
-/*
-            $.ajax({
-                url: 'https://api.spotify.com/v1/audio-features/2EEeOnHehOozLq4aS0n6SL',
-                headers: {
-                  'Authorization': 'Bearer ' + access_token
-                },
-                success: function(response) {
-                  audioFeaturesPlaceholder.innerHTML = audioFeaturesTemplate(response);
-                }
-            });
-*/
+
           } else {
               // render initial screen
               $('#login').show();

@@ -1,5 +1,11 @@
 #login, #loggedin {
   display: none;
+  font-family: 'Montserrat', sans-serif;
+}
+#header {
+  background-color: #6ae368;
+  color: white;
+  text-align: center;
 }
 .text-overflow {
   overflow: hidden;
