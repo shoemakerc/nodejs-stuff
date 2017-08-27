@@ -1,4 +1,4 @@
-# spotify_dance_judge
+# spotify-dance-judge
 
 How cool (or not cool) would you look busting moves to a certain song? Let the Spotify Dance Judge be the...judge.
 
