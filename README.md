@@ -25,7 +25,7 @@ If all is successful, open `http://localhost:8888`. Allow permissions and log in
 
 Once logged in, simply search for a song. For better results, include the artist name in with your search.
 
-![Usage example](https://github.com/shoemakerc/spotify-dance-judge/examples/usage_ex.PNG)
+![Usage example](https://github.com/shoemakerc/spotify-dance-judge/blob/master/examples/usage_ex.PNG)
 
 ## Additional info
 
