@@ -1,9 +1,1 @@
-[Tt]humbs.db
-*.DS_Store
-..gitignore.un~
-.gitignore~
-
-njtest/
-
-spotify-app/*
-!spotify-app/key_getter
+node_modules/*

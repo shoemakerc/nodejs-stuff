@@ -28,10 +28,10 @@
           <input type="submit" id="search" class="btn btn-primary" value="Search" />
         </form>
 
-        <div id="audio-features">
+        <div id="results">
         </div>
 
-        <div id="results">
+        <div id="audio-features">
         </div>
 
         <div id="oauth">
@@ -61,18 +61,16 @@
     <script id="audio-features-template" type="text/x-handlebars-template">
       <h2>Features</h2>
       <dl class="dl-horizontal">
-        <dt>Can I dance to this?</dt><dd>{{danceability}}</dd>
-        <dt>Key</dt><dd>{{key-convert key}} ({{key}})</dd>
+        <dt>Can I dance to this?</dt><dd>{{dance? danceability}}</dd>
+        <dt>Key</dt><dd>{{key-convert key}}</dd>
         <dt>Mood:</dt><dd>{{valence}}</dd>
       </dl>
     </script>
 
     <script id="results-template" type="text/x-handlebars-template">
       <h2>Results</h2>
-      <img width="25" src="{{tracks.items.0.album.images.0.url}}" />
-      <dl class="dl-horizontal">
-        <dt>Artist name:</dt><dd>{{tracks.items.0.artists.0.name}}</dd>
-      </dl>
+      <img width="150" height="150" src="{{tracks.items.0.album.images.0.url}}" />
+      <h4>You're (hopefully) searching for "{{tracks.items.0.name}}" by {{tracks.items.0.artists.0.name}}.</h4>
     </script>
 
     <script id="oauth-template" type="text/x-handlebars-template">
@@ -89,8 +87,21 @@
        * @param {number} key The pitch class value
        * @return {string} The corresponding tone
        */
+      Handlebars.registerHelper("dance?", function(danceability) {
+        if (danceability < 0.25) {
+          return "You're gonna look silly dancing to this..."
+        } else if (danceability >= 0.25 && danceability < 0.45) {
+          return "You can try to dance to this, but it might look a bit weird."
+        } else if (danceability >= 0.45 && danceability < 0.60) {
+          return "Alright, I guess I'll allow it."
+        } else if (danceability >= 0.60 && danceability < 0.85) {
+          return "I recommend you get down to this."
+        } else {
+          return "A complete banger. I hope you're busting moves right now."
+        }
+      });
       Handlebars.registerHelper("key-convert", function(key) {
-        var keys = ['C', 'C sharp', 'D', 'D sharp/E flat', 'E', 'F', 'F sharp/G flat', 'G', 'G sharp/A flat', 'A', 'A sharp/B flat', 'B'];
+        var keys = ['C', 'C#', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B'];
         return keys[key];
       });
     </script>
@@ -100,11 +111,11 @@
         var userProfileSource = document.getElementById('user-profile-template').innerHTML,
             userProfileTemplate = Handlebars.compile(userProfileSource),
             userProfilePlaceholder = document.getElementById('user-profile');
-
+/*
         var audioFeaturesSource = document.getElementById('audio-features-template').innerHTML,
             audioFeaturesTemplate = Handlebars.compile(audioFeaturesSource),
             audioFeaturesPlaceholder = document.getElementById('audio-features');
-
+*/
         var oauthSource = document.getElementById('oauth-template').innerHTML,
             oauthTemplate = Handlebars.compile(oauthSource),
             oauthPlaceholder = document.getElementById('oauth');
@@ -138,7 +149,7 @@
                   $('#loggedin').show(); // switch to render 'logged in' screen
                 }
             });
-
+/*
             $.ajax({
                 url: 'https://api.spotify.com/v1/audio-features/2EEeOnHehOozLq4aS0n6SL',
                 headers: {
@@ -148,7 +159,7 @@
                   audioFeaturesPlaceholder.innerHTML = audioFeaturesTemplate(response);
                 }
             });
-
+*/
           } else {
               // render initial screen
               $('#login').show();

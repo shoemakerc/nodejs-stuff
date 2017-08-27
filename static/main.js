@@ -12,9 +12,25 @@ var searchTracks = function (query, access_token) {
     },
     success: function (response) {
       var templateSource = document.getElementById('results-template').innerHTML,
-        template = Handlebars.compile(templateSource),
-        resultsPlaceholder = document.getElementById('results');
+          template = Handlebars.compile(templateSource),
+          resultsPlaceholder = document.getElementById('results');
       resultsPlaceholder.innerHTML = template(response);
+      getAudioFeatures(response.tracks.items[0].id, access_token);
+    }
+  });
+};
+
+var getAudioFeatures = function(id, access_token) {
+  $.ajax({
+    url: 'https://api.spotify.com/v1/audio-features/' + id,
+    headers: {
+      'Authorization': 'Bearer ' + access_token
+    },
+    success: function(response) {
+      var audioFeaturesSource = document.getElementById('audio-features-template').innerHTML,
+          audioFeaturesTemplate = Handlebars.compile(audioFeaturesSource),
+          audioFeaturesPlaceholder = document.getElementById('audio-features');
+      audioFeaturesPlaceholder.innerHTML = audioFeaturesTemplate(response);
     }
   });
 };

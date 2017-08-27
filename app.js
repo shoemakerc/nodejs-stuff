@@ -1,7 +1,9 @@
 /**
  * Node script to connect to the Spotify API
- * Uses the Authorization Code oAuth2 flow
- *
+ * Uses the Authorization Code oAuth2 flow 
+ * 
+ * Code below provided by the Spotify Accounts Authentication Examples
+ * (github.com/spotify/web-api-auth-examples)
  */
 
 var express = require('express'); // Express web server framework
@@ -32,7 +34,8 @@ var stateKey = 'spotify_auth_state';
 
 var app = express(); // initiate Express application
 
-app.use(express.static(__dirname + '/public')) // grab static assets from ~/public directory
+app.use(express.static(__dirname + '/static'))
+   .use(express.static(__dirname + '/templates'))
    .use(cookieParser());
 
 app.get('/login', function(req, res) {
