@@ -14,9 +14,19 @@ $ npm install
 
 Feel free to use the `client_id`, `client_secret`, and `redirect_uri` provided in `app.js`, or [follow the instructions here](https://developer.spotify.com/web-api/tutorial/) to create and register your own application, then replace the given `client_id`, `client_secret`, and `redirect_uri` values in `app.js` with the ones on your newly-registered app.
 
-## Running Spotify Dance Judge
+## Usage
+
+Run the application with:
 
 ```
 $ node app.js
 ```
-If all is successful, open `http://localhost:8888`.
+If all is successful, open `http://localhost:8888`. Allow permissions and log in if prompted.
+
+Once logged in, simply search for a song. For better results, include the artist name in with your search.
+
+![Usage example](https://github.com/shoemakerc/spotify-dance-judge/examples/usage_ex.PNG)
+
+## Additional info
+
+Uses Node for server authentication, jQuery/Bootstrap for responsiveness, and [Handlebars](http://handlebarsjs.com/) for template handling. Requires a Spotify account to use.
