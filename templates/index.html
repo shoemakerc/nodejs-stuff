@@ -5,6 +5,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="main.js"></script>
@@ -13,11 +14,12 @@
   <body>
     <div class="container">
       <div id="login">
-        <h1>Welcome to the Spotify Dance Judge! Click the button below to get started.</h1>
+        <h1 id="login-header">Welcome to the Spotify Dance Judge! Click the button below to get started.</h1>
         <a href="/login" class="btn btn-primary">Enter</a>
       </div>
       <div id="loggedin">
         <h1 id="header" style="text-align:center">Spotify Dance Judge</h1>
+        <div class="head-icon"><i class="fa fa-headphones fa-4x"></i></div>
         <br><br>
         <div id="search">
           <h3>Search</h3>
@@ -29,23 +31,17 @@
           </form>
         </div>
 
-        <div id="results">
+        <div id="results"></div>
 
+        <div id="audio-features"></div>
+
+        <div class="row">
+          <div class="col-xs-6" id="user-profile"></div>
+          <div class="col-xs-6" id="oauth">
+            <!--<button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>-->
+          </div>
+          
         </div>
-
-        <div id="audio-features">
-
-        </div>
-
-        <div id="user-profile">
-
-        </div>
-
-        <div id="oauth">
-
-        </div>
-
-        <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
 
       </div>
     </div>
@@ -68,9 +64,9 @@
     <script id="audio-features-template" type="text/x-handlebars-template">
       <h3>Features</h3>
       <dl class="dl-horizontal">
-        <dt>Can I dance to this?</dt><dd>{{dance? danceability}}</dd>
         <dt>Key</dt><dd>{{key-convert key}}</dd>
         <dt>Mood:</dt><dd>{{valence}}</dd>
+        <dt>Can I dance to this?</dt><dd>{{dance? danceability}}</dd>
       </dl>
     </script>
 
@@ -86,14 +82,16 @@
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
         <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}></dd>
       </dl>
+      <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
     </script>
 
     <script>
       /**
-       * Helper register: map given pitch class to associated tone
-       * @param {number} key The pitch class value
-       * @return {string} The corresponding tone
+       * Helper register: map danceability
+       * @param {number} danceability 
+       * @return {string} The judgment
        */
+
       Handlebars.registerHelper("dance?", function(danceability) {
         if (danceability < 0.25) {
           return "You're gonna look silly dancing to this..."
@@ -107,6 +105,13 @@
           return "A complete banger. I hope you're busting moves right now."
         }
       });
+
+      /**
+       * Helper register: map given pitch class to associated tone
+       * @param {number} key The pitch class value
+       * @return {string} The corresponding tone
+       */
+
       Handlebars.registerHelper("key-convert", function(key) {
         var keys = ['C', 'C#', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B'];
         return keys[key];
@@ -118,11 +123,7 @@
         var userProfileSource = document.getElementById('user-profile-template').innerHTML,
             userProfileTemplate = Handlebars.compile(userProfileSource),
             userProfilePlaceholder = document.getElementById('user-profile');
-/*
-        var audioFeaturesSource = document.getElementById('audio-features-template').innerHTML,
-            audioFeaturesTemplate = Handlebars.compile(audioFeaturesSource),
-            audioFeaturesPlaceholder = document.getElementById('audio-features');
-*/
+
         var oauthSource = document.getElementById('oauth-template').innerHTML,
             oauthTemplate = Handlebars.compile(oauthSource),
             oauthPlaceholder = document.getElementById('oauth');
