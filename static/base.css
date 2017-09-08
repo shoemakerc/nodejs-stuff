@@ -7,14 +7,24 @@
   text-align: center;
 }
 
-.head-icon {
+#header {
+  background-color: #7e48e5;
+  color: white;
+  padding-bottom: 1.75vw;
+  padding-top: 1.75vw;
   text-align: center;
 }
 
-#header {
+#search-section {
   background-color: #6ae368;
+  padding: 5vw 2.5vw 5vw 2.5vw;
+}
+
+#profile-section {
+  background-color: #191414;
   color: white;
-  text-align: center;
+  padding-bottom: 1.75vw;
+  padding-top: 1.75vw;
 }
 
 .text-overflow {
